@@ -1,4 +1,3 @@
-from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 from deck import *
 
@@ -53,6 +52,8 @@ def parseDec(file):
     #print(deck)
     print("Exiting") 
     return deck
+
+
 def factorial(number):
     if(number ==0):
         return 1

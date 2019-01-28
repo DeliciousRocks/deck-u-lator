@@ -4,11 +4,19 @@ class MyDeck:
         self.cards = []
     def __str__(self):
         deck = ""
-        while(len(self.cards)>0):
-            card = self.cards.pop() 
+        temp = []
+        temp.extend(self.cards)
+        while(len(temp)>0):
+            card = temp.pop() 
             #print(card)
             deck = deck + str(card) +" : " + str(card.number) + "\n"
         return deck
+    def cardsInDeck(self):
+        count = 0
+        for card in self.cards:
+            count = count + card.number
+        print(count)
+        return count
     def addCard(self,card):
         if (self.cards.count(card)==0):
             card.number=1
@@ -30,6 +38,14 @@ class MyDeck:
                 print(uniqueCard.number)
                 for x in range(uniqueCard.number):
                     self.addCard(uniqueCard)
+    def getCardNames(self):
+        cardNames =[]
+        temp = []
+        temp.extend(self.cards)
+        while(len(temp)>0):
+            card = temp.pop()
+            cardNames.append(str(card))
+        return cardNames 
 class MyCard:
     def __init__(self,n):
         self.name = n
