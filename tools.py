@@ -1,12 +1,13 @@
-from tkinter.filedialog import askopenfilename
+from tkinter.filedialog import askopenfilename,Tk
 from deck import *
 
 supported = [".dck",".dec"]
 
 def importDeck():
     #print("Import Deck")
-    #Tk().withdraw()
-    fileName = "C:/Users/walte/Downloads/Heartless Retrival 3-12.dec"#askopenfilename()
+    Tk().withdraw()
+    #fileName = "C:/Users/walte/Downloads/Heartless Retrival 3-12.dec"#askopenfilename()
+    fileName = askopenfilename()
     print(fileName)
     file = open(fileName, "r")
     extention = fileName[len(fileName)-4:len(fileName)]
@@ -52,7 +53,6 @@ def parseDec(file):
     #print(deck)
     print("Exiting") 
     return deck
-
 
 def factorial(number):
     #print(number)

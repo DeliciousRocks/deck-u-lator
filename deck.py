@@ -42,6 +42,7 @@ class MyDeck:
     def importFile(self,deckList):
         if deckList is not None:
             #print("Not None")
+            self.cards = []
             for uniqueCard in deckList:
                 print(uniqueCard.number)
                 for x in range(uniqueCard.number):

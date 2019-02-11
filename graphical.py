@@ -4,12 +4,7 @@ from tools import *
 
 
 
-def populateOptions(deck):
-	root = Tk()
-	menu = Menu(root) 
-	root.config(menu=menu)
-	filemenu = Menu(menu)
-
+def createGUI(deck):
 	def createWildcard():
 		def addToWildcard():
 			selected = cards.get('active')
@@ -46,19 +41,16 @@ def populateOptions(deck):
 		name.grid(row=3, column=1)
 		submit = Button(popOut, text='Submit', width=25, command=submitWildCard ) 
 		submit.grid(row=4)
-
-	menu.add_cascade(label="Options", menu= filemenu)
-	filemenu.add_command(label="New Wild Card", command=createWildcard)
-
-	root.title("Deck-U-Lator")
-	mylistLeft = Listbox()
-	mylistLeft.grid(row=1, column = 0)
-	mylistRight = Listbox()
-	mylistRight.grid(row=1, column = 1)
-
-	for card in deck.getCardNames(): 
-		mylistLeft.insert(END, card) 
-		mylistLeft.grid(row=1,column=0)
+	def populateOptions():
+		deck = importDeck()
+		#mylistLeft = Listbox()
+		#mylistRight = Listbox()
+		mylistLeft.delete(0,END)
+		mylistRight.delete(0,END)
+		loadedDeck.importFile(deck)
+		for card in loadedDeck.getCardNames(): 
+			mylistLeft.insert(END, card) 
+			mylistLeft.grid(row=1,column=0)	
 	def addToRight():
 		selected = mylistLeft.get('active')
 		mylistRight.insert(END, selected)
@@ -68,12 +60,12 @@ def populateOptions(deck):
 		mylistRight.delete('active')
 	def calculate():
 		total = 0
-		failures = deck.cardsInDeck()
+		failures = loadedDeck.cardsInDeck()
 		successes = []
 		current = []
 		iterations = 1
 		for card in mylistRight.get(0,END):
-				temp = deck.numberOfCardInDeck(card)
+				temp = loadedDeck.numberOfCardInDeck(card)
 				iterations = iterations * temp
 				failures = failures - temp
 				successes.append(temp)
@@ -87,7 +79,7 @@ def populateOptions(deck):
 				top = top * binomialCoefficient(successes[x],current[x])
 			top = top * binomialCoefficient(failures,int(w.get())-runningTotal)
 			print("---------")
-			bottom = binomialCoefficient(deck.cardsInDeck(),int(w.get()))
+			bottom = binomialCoefficient(loadedDeck.cardsInDeck(),int(w.get()))
 			temp = (top/bottom)
 			print(temp)
 			if(runningTotal>=0):
@@ -106,12 +98,27 @@ def populateOptions(deck):
 						y = y + 1
 						print("Y")
 		print(total)
+	
+	root = Tk()
+	menu = Menu(root) 
+	root.config(menu=menu)
+	filemenu = Menu(menu)
+	loadedDeck = MyDeck()
+
+	root.title("Deck-U-Lator")
+	menu.add_cascade(label="Options", menu= filemenu)
+	filemenu.add_command(label="Import Deck",command=populateOptions)
+	filemenu.add_command(label="New Wild Card", command=createWildcard)
+
+	mylistLeft = Listbox()
+	mylistLeft.grid(row=1, column = 0)
+	mylistRight = Listbox()
+	mylistRight.grid(row=1, column = 1)
 
 	add = Button( text='Add', width=25, command=addToRight) 
 	add.grid(row=2, column = 0)
 	remove = Button( text='Remove', width=25, command=removeFromRight) 
 	remove.grid(row=2, column = 1)
-
 
 	Label(root,text = "Card to Draw").grid(row=3)
 	w = Spinbox( from_ = 0, to = deck.cardsInDeck())
@@ -121,3 +128,7 @@ def populateOptions(deck):
 	calculate.grid(row=4)
 
 	mainloop() 
+
+
+	
+
