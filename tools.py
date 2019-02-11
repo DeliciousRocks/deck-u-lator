@@ -55,9 +55,11 @@ def parseDec(file):
 
 
 def factorial(number):
-    if(number ==0):
+    #print(number)
+    if(int(number)<=0):
         return 1
     else:
-        return number * factorial(number-1)
+        return int(number) * factorial(int(number)-1)
 def binomialCoefficient(N,n):
+    print("COMBIN("+str(N)+","+str(n)+")")
     return (factorial(N)/((factorial(n)*factorial(N-n))))

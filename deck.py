@@ -15,8 +15,16 @@ class MyDeck:
         count = 0
         for card in self.cards:
             count = count + card.number
-        print(count)
+        #print(count)
         return count
+    def numberOfCardInDeck(self,search):
+        temp = []
+        temp.extend(self.cards)
+        while(len(temp)>0):
+            card = temp.pop() 
+            if(card.name==search):
+                return card.number
+        return 0
     def addCard(self,card):
         if (self.cards.count(card)==0):
             card.number=1
